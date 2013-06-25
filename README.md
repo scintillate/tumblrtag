@@ -1,6 +1,7 @@
 tumblrtag
 =========
 
+it may be easier to read the file "raw"
 This javascript was written so that a user could add it to the page and it would generate a javascript object containing all the tags used in their posts along with their usage numbers.
 
 e.g
@@ -19,17 +20,17 @@ Tags: #sick
 
 From the above blog, the generated javascript object would have this format
 [
-  bad     1
-  hello   1
-  sick    2
+  bad     1, 
+  hello   1, 
+  sick    2, 
   world   1
 ]
 
 A second function which can then be used to sort them is also included, this results in
 [
-  sick    2
-  bad     1
-  hello   1
+  sick    2, 
+  bad     1, 
+  hello   1, 
   world   1
 ]
 
