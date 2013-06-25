@@ -1,0 +1,26 @@
+/* this is a simple css i used to style my tags */
+
+#taginfo {
+    clear:both;
+}
+.tagitem {
+	display:inline-block;
+    margin:15px;
+}
+
+.always {
+	font-size:300%
+
+}
+.normal {
+	font-size:200%
+}
+.frequent {
+	font-size:150%
+}
+.sometimes {
+	font-size:100%
+}
+.barely {
+	font-size:80%
+}
