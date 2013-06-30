@@ -1,5 +1,6 @@
 tumblrtag
 =========
+Get all unique tags from tumblr blog!~
 
 it may be easier to read the file "raw"
 This javascript was written so that a user could add it to the page and it would generate a javascript object containing all the tags used in their posts along with their usage numbers.
