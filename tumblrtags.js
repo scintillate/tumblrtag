@@ -8,6 +8,12 @@
 // 5)generate flowers simply sorts your results in descending post count (e.g. apples 6 oranges 3 grapes 2) and generates an simple ul and then returns the whole html as a string
 //	 it assumes you have a div with id="taggggs" and replaces the html inside
 
+//global variables
+
+//the name of your page on tumblr where you are displaying your tags (from the end of the URL)
+//you can change this to whatever you want to use on your Tumblr
+your_pathname = 'tags';
+
 //global counters
 totalposts = 0;
 totaltags = 0;
@@ -157,7 +163,7 @@ function getPostCount(user_url) {
 
 //starts the whole chain, without this block nothing will happen
 $(document).ready(function() {
-    if (location.pathname == '/tags' || location.pathname == '/tags/') {	//you can change the /tags to whatever pathname you want
+    if (location.pathname == '/' + your_pathname || location.pathname == '/' + your_pathname + '/') {
 		user = location.hostname;		//this'll cause the page to autoload the tags for the blog it is placed on
 		getPostCount(user);		
 	}
