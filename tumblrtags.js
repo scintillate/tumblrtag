@@ -89,6 +89,19 @@ function getTags(user_url)
 	}
 }
 
+function sanitizeTagForURL(tag_name)
+{
+	sanitized_tag_name = tag_name;
+
+	// replace spaces with hyphens
+	sanitized_tag_name = sanitized_tag_name.replace(/\s+/g, '-');
+	
+	// replace apostrophes with URL encoding
+	sanitized_tag_name = sanitized_tag_name.replace(/[']/g, '%27');
+	
+	return sanitized_tag_name;
+}
+
 //generate the pretty html that you'll use on your page
 function generateFlowers(tags)
 {
@@ -125,7 +138,9 @@ function generateFlowers(tags)
 		frequency = 'always';
 		}
 		
-		flower += "<li class='tagitem'><a href='/tagged/"+t.replace(/\s+/g, '-')+"' class='" + frequency + "'>"+ t + " " + number +"</a></li>";
+		tag_url = "/tagged/" + sanitizeTagForURL(t);
+		
+		flower += "<li class='tagitem'><a href='" + tag_url + "' class='" + frequency + "'>"+ t + " " + number + "</a></li>";
 	}
 	flower += "</ul>";	
 	
