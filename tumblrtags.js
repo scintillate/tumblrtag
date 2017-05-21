@@ -114,7 +114,7 @@ function generateFlowers(tags)
 	
 	if (sum < totaltags) { console.log('not ready ' + sum + "/" + total); return 'loading' + sum + "/" + total;}
 	
-	flower = "<ul id='tag_info' style='width:800px;'>";
+	flower = "<ul id='tag_info'>";
 	sortedTags = getSortedKeys(tags);
 	console.log(sortedTags);	//prints the sorted tags in descending order
 	
