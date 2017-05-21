@@ -14,6 +14,17 @@
 //you can change this to whatever you want to use on your Tumblr
 your_pathname = 'tags';
 
+//these are used to determine how to set the font-sizes of the tags in the resulting list of tags
+//this way, the most used tags (with the highest usage-count) can have the largest font size
+//while the tags you barely use can have the smallest font size
+//you can set the boundaries between each category here, based on what suits you and your blog.
+
+threshold_barely = 5;		// tags used under this many times are considered barely-used
+threshold_sometimes = 12;	// tags used more than barely, but under this many times, are considered sometimes-used
+threshold_frequent = 25;	// tags used more than sometimes, but under this many times, are considered frequently-used
+threshold_normal = 50;		// tags used more than frequently, but under this many times, are considered normally-used
+// tags used more than normally will be considered always-used
+
 //global counters
 totalposts = 0;
 totaltags = 0;
@@ -123,16 +134,16 @@ function generateFlowers(tags)
         number = tags[t];
 		frequency = '';
 		
-		if (number < 5) {
+		if (number < threshold_barely) {
 		frequency = 'barely';
 		}
-		else if (number < 12) {
+		else if (number < threshold_sometimes) {
 		frequency = 'sometimes';
 		}
-		else if (number < 25) {
+		else if (number < threshold_frequent) {
 		frequency = 'frequent';
 		}
-		else if (number < 50) {
+		else if (number < threshold_normal) {
 		frequency = 'normal';
 		}
 		else {
