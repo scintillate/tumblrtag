@@ -140,7 +140,7 @@ function generateFlowers(tags)
 		
 		tag_url = "/tagged/" + sanitizeTagForURL(t);
 		
-		flower += "<li class='tagitem'><a href='" + tag_url + "' class='" + frequency + "'>"+ t + " " + number + "</a></li>";
+		flower += "<li class='tagitem'><a href='" + tag_url + "' class='" + frequency + "'>"+ t + "" + " (" + number + ") </a></li>";
 	}
 	flower += "</ul>";	
 	
