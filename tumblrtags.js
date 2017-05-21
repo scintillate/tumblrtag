@@ -89,6 +89,7 @@ function getTags(user_url)
 	}
 }
 
+//adjust the tag name so that it will work as a URL for that tag
 function sanitizeTagForURL(tag_name)
 {
 	sanitized_tag_name = tag_name;
