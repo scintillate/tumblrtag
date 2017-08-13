@@ -14,6 +14,17 @@
 //you can change this to whatever you want to use on your Tumblr
 your_pathname = 'tags';
 
+//these are used to determine how to set the font-sizes of the tags in the resulting list of tags
+//this way, the most used tags (with the highest usage-count) can have the largest font size
+//while the tags you barely use can have the smallest font size
+//you can set the boundaries between each category here, based on what suits you and your blog.
+
+threshold_barely = 5;		// tags used under this many times are considered barely-used
+threshold_sometimes = 12;	// tags used more than barely, but under this many times, are considered sometimes-used
+threshold_frequent = 25;	// tags used more than sometimes, but under this many times, are considered frequently-used
+threshold_normal = 50;		// tags used more than frequently, but under this many times, are considered normally-used
+// tags used more than normally will be considered always-used
+
 //global counters
 totalposts = 0;
 totaltags = 0;
@@ -89,6 +100,20 @@ function getTags(user_url)
 	}
 }
 
+//adjust the tag name so that it will work as a URL for that tag
+function sanitizeTagForURL(tag_name)
+{
+	sanitized_tag_name = tag_name;
+
+	// replace spaces with hyphens
+	sanitized_tag_name = sanitized_tag_name.replace(/\s+/g, '-');
+	
+	// replace apostrophes with URL encoding
+	sanitized_tag_name = sanitized_tag_name.replace(/[']/g, '%27');
+	
+	return sanitized_tag_name;
+}
+
 //generate the pretty html that you'll use on your page
 function generateFlowers(tags)
 {
@@ -100,7 +125,7 @@ function generateFlowers(tags)
 	
 	if (sum < totaltags) { console.log('not ready ' + sum + "/" + total); return 'loading' + sum + "/" + total;}
 	
-	flower = "<ul id='tag_info' style='width:800px;'>";
+	flower = "<ul id='tag_info'>";
 	sortedTags = getSortedKeys(tags);
 	console.log(sortedTags);	//prints the sorted tags in descending order
 	
@@ -109,23 +134,25 @@ function generateFlowers(tags)
         number = tags[t];
 		frequency = '';
 		
-		if (number < 5) {
+		if (number < threshold_barely) {
 		frequency = 'barely';
 		}
-		else if (number < 12) {
+		else if (number < threshold_sometimes) {
 		frequency = 'sometimes';
 		}
-		else if (number < 25) {
+		else if (number < threshold_frequent) {
 		frequency = 'frequent';
 		}
-		else if (number < 50) {
+		else if (number < threshold_normal) {
 		frequency = 'normal';
 		}
 		else {
 		frequency = 'always';
 		}
 		
-		flower += "<li class='tagitem'><a href='/tagged/"+t.replace(/\s+/g, '-')+"' class='" + frequency + "'>"+ t + " " + number +"</a></li>";
+		tag_url = "/tagged/" + sanitizeTagForURL(t);
+		
+		flower += "<li class='tagitem'><a href='" + tag_url + "' class='" + frequency + "'>"+ t + "" + " (" + number + ") </a></li>";
 	}
 	flower += "</ul>";	
 	
