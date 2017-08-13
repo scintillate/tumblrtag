@@ -25,6 +25,11 @@ threshold_frequent = 25;	// tags used more than sometimes, but under this many t
 threshold_normal = 50;		// tags used more than frequently, but under this many times, are considered normally-used
 // tags used more than normally will be considered always-used
 
+// caseInsensitive:
+// if true, all tags will be treated as if they were lower-case (this is how Tumblr seems to treat tags)
+// If false, multiple versions of the tag with different capitalizations will be displayed and counted separately.
+caseInsensitive = true;
+
 //global counters
 totalposts = 0;
 totaltags = 0;
@@ -63,6 +68,12 @@ function getTags(user_url)
 		for (var i=0;i<data.response.posts.length;i++){
 			for (var j=0;j<data.response.posts[i].tags.length;j++){
 				temp_tag = data.response.posts[i].tags[j];
+				
+				if( caseInsensitive )
+				{
+					temp_tag = temp_tag.toLowerCase();
+				}
+				
 				if (tags[temp_tag]) {
 					tags[temp_tag]++;
 				}
