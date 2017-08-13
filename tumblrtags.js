@@ -67,12 +67,7 @@ function getTags(user_url)
 		//process and add the tags into the tags array
 		for (var i=0;i<data.response.posts.length;i++){
 			for (var j=0;j<data.response.posts[i].tags.length;j++){
-				temp_tag = data.response.posts[i].tags[j];
-				
-				if( caseInsensitive )
-				{
-					temp_tag = temp_tag.toLowerCase();
-				}
+				temp_tag = sanitizeTagForList( data.response.posts[i].tags[j] );
 				
 				if (tags[temp_tag]) {
 					tags[temp_tag]++;
@@ -111,6 +106,35 @@ function getTags(user_url)
 	}
 }
 
+//adjust the tag name so that it can be used in a list of tags to be counted
+function sanitizeTagForList(tag_name)
+{
+	sanitized_tag_name = tag_name;
+	
+	if( caseInsensitive )
+	{
+		sanitized_tag_name = sanitized_tag_name.toLowerCase();
+	}
+	
+	// The addition of quotes here avoids problems with reserved words, like "pop"
+	// We will need to remove the quotes later.
+	sanitized_tag_name = '"' + sanitized_tag_name + '"';
+	
+	return sanitized_tag_name;
+}
+
+//Prepare the tag to be displayed, undoing the weird things we did to sanitize it
+function getTagName(t)
+{
+	tag_name = t;
+	
+	// Remove the double-quotes from the beginning and end of the tag-name
+	// which were added in sanitizeTagForList
+	tag_name = tag_name.substring( 1, tag_name.length - 1 );
+	
+	return tag_name;
+}
+
 //adjust the tag name so that it will work as a URL for that tag
 function sanitizeTagForURL(tag_name)
 {
@@ -142,7 +166,8 @@ function generateFlowers(tags)
 	
 	for (var i=0;i<sortedTags.length;i++){
 		t = sortedTags[i];
-        number = tags[t];
+      		number = tags[t];
+		tag_name = getTagName(t);
 		frequency = '';
 		
 		if (number < threshold_barely) {
@@ -161,9 +186,9 @@ function generateFlowers(tags)
 		frequency = 'always';
 		}
 		
-		tag_url = "/tagged/" + sanitizeTagForURL(t);
+		tag_url = "/tagged/" + sanitizeTagForURL(tag_name);
 		
-		flower += "<li class='tagitem'><a href='" + tag_url + "' class='" + frequency + "'>"+ t + "" + " (" + number + ") </a></li>";
+		flower += "<li class='tagitem'><a href='" + tag_url + "' class='" + frequency + "'>"+ tag_name + "" + " (" + number + ") </a></li>";
 	}
 	flower += "</ul>";	
 	
